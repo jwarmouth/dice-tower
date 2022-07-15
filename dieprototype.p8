@@ -63,6 +63,9 @@ function _update()
 	else
 		prevtime -= 1
 	end
+	if prevtime == 1 then
+		difficulty += 2
+	end
 	
 	if btnp(❎) and previewing then
 		local test = true
@@ -83,7 +86,6 @@ function _update()
 			t[#t].timer = 0
 			t[#t].range = preview.range
 			t[#t].targets=preview.targets
-			difficulty += 1
 		end
 	end
 	

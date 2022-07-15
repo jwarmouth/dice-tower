@@ -49,7 +49,7 @@ function _update()
 		end
 	end
 	
-	if prevtime == 0
+	if prevtime <= 0
 	and previewing == false then
 		previewing = true
 		preview.speed = 5+rnd(60)
@@ -69,7 +69,8 @@ function _update()
 		for i = 1, #t do
 			if (cx-t[i].x)^2
 			  +(cy-t[i].y)^2
-			 < 32^2 then
+			 < (t[i].range
+			 	+preview.range)^2 then
 			 test = false
    end
 		end
@@ -136,7 +137,8 @@ function _draw()
 		for i = 1, #t do
 			if (cx-t[i].x)^2
 			  +(cy-t[i].y)^2
-			 < 16^2 then
+			 < (t[i].range
+			 	+preview.range)^2 then
 			 color(8)
    end
 		end

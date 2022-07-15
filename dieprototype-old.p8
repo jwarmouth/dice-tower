@@ -9,9 +9,6 @@ function _init()
 	cspeed = 3
 	t = {}
 	difficulty = 1
-	preview = {}
-	previewing = false
-	prevtime = 0
 end
 
 function _update()
@@ -49,31 +46,18 @@ function _update()
 		end
 	end
 	
-	if prevtime == 0
-	and previewing == false then
-		previewing = true
-		preview.speed = 5+rnd(60)
-		preview.range = 8+rnd(32)
-		if rnd(7) < 1 then
-			preview.targets = rnd(10)
-		else
-			preview.targets = rnd(3)
-		end
-		prevtime = 30*10
-	else
-		prevtime -= 1
-	end
-	
-	if btnp(❎) and previewing then
-		previewing = false
+	if btnp(❎) then
 		add(t,{})
 		t[#t].x = cx
 		t[#t].y = cy
-		t[#t].speed = preview.speed
+		t[#t].speed = 5+rnd(60)
 		t[#t].timer = 0
-		t[#t].range = preview.range
-		t[#t].targets=preview.targets
-		difficulty += 1
+		t[#t].range = 8+rnd(32)
+		if rnd(7) < 1 then
+			t[#t].targets = rnd(10)
+		else
+			t[#t].targets = rnd(3)
+		end
 	end
 	
 	for i = 1, #t do
@@ -86,7 +70,7 @@ function _update()
 				  +abs(e[j][2]-t[i].y)^2
 				<=t[i].range^2 then
 					del(e,e[j])
-					--difficulty += .5
+					difficulty += .5
 					tars -= 1
 					if tars < 1 then
 						break
@@ -101,14 +85,12 @@ function _draw()
 	cls()
 	camera(min(max(cx-64,0),128),0)
 	map()
-	--draw enemies
 	for i = 1, #e do
 		rectfill(e[i][1],e[i][2],
 		       e[i][1]+8,e[i][2]+8,6)
 		rect(e[i][1],e[i][2],
 		     e[i][1]+8,e[i][2]+8,1)
 	end
-	--draw towers
 	for i = 1, #t do
 		circ(t[i].x,t[i].y,t[i].range)
 		if t[i].timer < 1 then
@@ -118,18 +100,7 @@ function _draw()
 		print(ceil(t[i].targets)
 		,t[i].x,t[i].y)
 	end
-	
-	--draw cursor & preview
 	spr(0,cx,cy)
-	if previewing then
-		circ(cx,cy,preview.range,6)
-		print("speed: "
-		..ceil(60/preview.speed).."/s"
-		,cx-20,cy+10,7)
-		print("targets: "
-		..ceil(preview.targets)
-		,cx-20,cy+20)
-	end
 end
 __gfx__
 00000000333333339999999900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

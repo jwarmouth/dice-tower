@@ -63,9 +63,7 @@ function _update()
 	else
 		prevtime -= 1
 	end
-	if prevtime == 1 then
-		difficulty += 2
-	end
+	difficulty += 2/(30*10)
 	
 	if btnp(❎) and previewing then
 		local test = true
@@ -86,6 +84,16 @@ function _update()
 			t[#t].timer = 0
 			t[#t].range = preview.range
 			t[#t].targets=preview.targets
+		end
+	end
+	
+	if btnp(🅾️) then
+		for i = #t, 1, -1 do
+			if (cx-t[i].x)^2
+			  +(cy-t[i].y)^2
+			 < t[i].range^2 then
+			 del(t,t[i])
+   end
 		end
 	end
 	
@@ -152,6 +160,7 @@ function _draw()
 		..ceil(preview.targets)
 		,cx-20,cy+20)
 	end
+	print(flr(difficulty),min(max(cx-64,0),128)+1,1)
 end
 __gfx__
 00000000333333339999999900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

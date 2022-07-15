@@ -65,15 +65,25 @@ function _update()
 	end
 	
 	if btnp(❎) and previewing then
-		previewing = false
-		add(t,{})
-		t[#t].x = cx
-		t[#t].y = cy
-		t[#t].speed = preview.speed
-		t[#t].timer = 0
-		t[#t].range = preview.range
-		t[#t].targets=preview.targets
-		difficulty += 1
+		local test = true
+		for i = 1, #t do
+			if (cx-t[i].x)^2
+			  +(cy-t[i].y)^2
+			 < 32^2 then
+			 test = false
+   end
+		end
+		if test then
+			previewing = false
+			add(t,{})
+			t[#t].x = cx
+			t[#t].y = cy
+			t[#t].speed = preview.speed
+			t[#t].timer = 0
+			t[#t].range = preview.range
+			t[#t].targets=preview.targets
+			difficulty += 1
+		end
 	end
 	
 	for i = 1, #t do
@@ -122,7 +132,15 @@ function _draw()
 	--draw cursor & preview
 	spr(0,cx,cy)
 	if previewing then
-		circ(cx,cy,preview.range,6)
+		color(6)
+		for i = 1, #t do
+			if (cx-t[i].x)^2
+			  +(cy-t[i].y)^2
+			 < 16^2 then
+			 color(8)
+   end
+		end
+		circ(cx,cy,preview.range)
 		print("speed: "
 		..ceil(60/preview.speed).."/s"
 		,cx-20,cy+10,7)

@@ -1,9 +1,13 @@
 pico-8 cartridge // http://www.pico-8.com
 version 27
 __lua__
+--#include path.p8:1
+
 function _init()
 	e = {}
-	add(e,{29*8+4,14*8,-1,0})
+	--add(e,{29*8+4,14*8,-1,0})
+	add_enemy()
+	set_path()
 	cx = 64
 	cy = 64
 	cspeed = 3
@@ -29,9 +33,11 @@ function _update()
 	end
 	
 	if rnd(100) < difficulty then
-		add(e,{29*8+4,14*8,-1,0})
+		--add(e,{29*8+4,14*8,-1,0})
+		add_enemy()
 	end
-	
+	move_enemies()
+	--[[
 	for i = 1, #e do
 		if e[i][4] > 0 then
 			e[i][1] -= 1
@@ -48,6 +54,7 @@ function _update()
 			end
 		end
 	end
+	--]]
 	
 	if prevtime <= 0
 	and previewing == false then

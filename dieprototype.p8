@@ -49,7 +49,8 @@ function _update()
 		end
 	end
 	
-	if prevtime == 0 then
+	if prevtime == 0
+	and previewing == false then
 		previewing = true
 		preview.speed = 5+rnd(60)
 		preview.range = 8+rnd(32)

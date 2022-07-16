@@ -133,7 +133,7 @@ end
 
 function _draw()
 	cls()
-	camera(min(max(cx-64,0),128),0)
+	camera(mid(0,cx-64,128),0)
 	map()
 	--draw enemies
 	for i = 1, #e do
@@ -164,7 +164,11 @@ function _draw()
 			  +(cy-t[i].y)^2
 			 < (t[i].range
 			 	+preview.range)^2 then
+			 rectfill(mid(0,cx-64,128),121
+			 ,mid(0,cx-64,128)+84,128,6)
 			 color(8)
+			 print("towers cannot overlap"
+			 ,mid(0,cx-63,128),122)
    end
 		end
 		circ(cx,cy,preview.range)
@@ -174,6 +178,16 @@ function _draw()
 		print("targets: "
 		..ceil(preview.targets)
 		,cx-20,cy+20)
+		print("press x to place tower"
+		,mid(0,cx-63,128),122-12)
+	end
+	for i = 1, #t do
+		if (cx-t[i].x)^2
+			+(cy-t[i].y)^2
+			< t[i].range^2 then
+			print("press z to remove tower"
+		 ,mid(0,cx-63,128),122-6)
+		end
 	end
 	print(flr(difficulty),min(max(cx-64,0),128)+1,1)
 end

@@ -5,12 +5,12 @@ __lua__
 
 function _init()
 	--add(e,{29*8+4,14*8,-1,0})
-	restart()
 	add_enemy()
 	set_path()
 	init_menu()
 	set_mode(0)
 	cspeed = 3
+	restart()
 end
 
 function restart()
@@ -23,6 +23,7 @@ function restart()
 	prevtime = 0
 	cx = 64
 	cy = 64
+	reset_d20()
 end
 
 function _update()
@@ -31,6 +32,8 @@ function _update()
 		update_menu()
 		return
 	end
+	
+	update_d20()
 	
 	if btn(⬆️) then
 		cy = max(cy-cspeed,0)

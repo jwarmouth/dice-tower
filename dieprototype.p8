@@ -75,11 +75,11 @@ function _update()
 	if prevtime <= 0
 	and previewing == false then
 		previewing = true
-		if #t > 3 then
+		--if #t > 3 then
 			preview.speed = 5+rnd(60)
-		else
-			preview.speed = 15+rnd(50)
-		end
+		--else
+		--	preview.speed = 15+rnd(50)
+		--end
 		preview.range = 8+rnd(32)
 		preview.durab = rnd(6)
 		if rnd(7) < 1 and #t > 3 then

@@ -235,8 +235,10 @@ function reset_d20()
 	d20 = 20
 	d20_node = 11
 	d20_target = 12
-	d20_x = path[d20_node][1]
-	d20_y = path[d20_node][2] 
+	d20_x = 240
+	d20_y = 80
+	--d20_x = path[d20_node][1]
+	--d20_y = path[d20_node][2] 
 end
 
 function damage_d20()
@@ -253,6 +255,7 @@ function update_d20()
   return
  end
  -- move d20 toward target
+ --[[
  node = path[d20_node]
 	xdif = node[1]*8 - d20_x
 	ydif = node[2]*8 - d20_y
@@ -261,15 +264,15 @@ function update_d20()
 	if d20_x == node[1]*8
 	and d20_y == node[2]*8 then
 		d20_node += 1
-		---[[
 	end
+	--]]
 end
 
 function draw_d20()
-	dxt = 2
-	dyt = 3
+	dxt = 4
+	dyt = 5
 	if d20 < 10 then
-		doff = 2
+		dyt += 2
 	end
 	spr (22,d20_x,d20_y,2,2)
 	print (d20,d20_x+dyt,d20_y+dyt,0)

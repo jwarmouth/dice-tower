@@ -4,21 +4,13 @@ __lua__
 --#include path.p8:1
 
 function _init()
-	e = {}
 	--add(e,{29*8+4,14*8,-1,0})
+	restart()
 	add_enemy()
 	set_path()
 	init_menu()
 	set_mode(0)
-	d20 = 20
-	cx = 64
-	cy = 64
 	cspeed = 3
-	t = {}
-	difficulty = 1
-	preview = {}
-	previewing = false
-	prevtime = 0
 end
 
 function restart()
@@ -29,6 +21,8 @@ function restart()
 	preview = {}
 	previewing = false
 	prevtime = 0
+	cx = 64
+	cy = 64
 end
 
 function _update()

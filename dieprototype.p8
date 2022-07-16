@@ -8,6 +8,9 @@ function _init()
 	--add(e,{29*8+4,14*8,-1,0})
 	add_enemy()
 	set_path()
+	init_menu()
+	set_mode(0)
+	d20 = 20
 	cx = 64
 	cy = 64
 	cspeed = 3
@@ -18,7 +21,23 @@ function _init()
 	prevtime = 0
 end
 
+function restart()
+	e = {}
+	t = {}
+	d20 = 20
+	difficulty = 1
+	preview = {}
+	previewing = false
+	prevtime = 0
+end
+
 function _update()
+	
+	if mode != 1 then
+		update_menu()
+		return
+	end
+	
 	if btn(⬆️) then
 		cy = max(cy-cspeed,0)
 	end
@@ -59,10 +78,14 @@ function _update()
 	if prevtime <= 0
 	and previewing == false then
 		previewing = true
-		preview.speed = 5+rnd(60)
+		if #t > 3 then
+			preview.speed = 5+rnd(60)
+		else
+			preview.speed = 15+rnd(50)
+		end
 		preview.range = 8+rnd(32)
 		preview.durab = rnd(6)
-		if rnd(7) < 1 then
+		if rnd(7) < 1 and #t > 3 then
 			preview.targets = rnd(10)
 		else
 			preview.targets = rnd(3)
@@ -133,6 +156,12 @@ end
 
 function _draw()
 	cls()
+	
+	if mode != 1 then
+		draw_menu()
+		return
+	end
+	
 	camera(mid(0,cx-64,128),0)
 	map()
 	--draw enemies
@@ -189,6 +218,7 @@ function _draw()
 		 ,mid(0,cx-63,128),122-6)
 		end
 	end
+	draw_d20()
 	print(flr(difficulty),min(max(cx-64,0),128)+1,1)
 end
 __gfx__

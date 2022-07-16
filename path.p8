@@ -245,7 +245,8 @@ function damage_d20()
 	d20 -= 1
 	if d20 <= 10 then
 	 d20_target = #path
-	elseif d20 <= 0 then
+	end
+	if d20 <= 0 then
 		set_mode(2)
 	end
 end

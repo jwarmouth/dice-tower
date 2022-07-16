@@ -8,7 +8,7 @@ function _init()
 	set_path()
 	init_menu() -- alex add
 	set_mode(0) -- alex add
-	d20 = 20    -- alex add
+	reset_d20() -- alex add to restart
 	cx = 64
 	cy = 64
 	cspeed = 3
@@ -45,7 +45,7 @@ function _update()
 	end
 	
 	move_enemies()
-
+ update_d20()
 	
 	if prevtime == 0
 	and previewing == false then
@@ -231,22 +231,50 @@ function move_enemies()
 	end
 end
 
+function reset_d20()
+	d20 = 20
+	d20_node = 11
+	d20_target = 12
+	d20_x = path[d20_node][1]
+	d20_y = path[d20_node][2] 
+end
+
 function damage_d20()
 	d20 -= 1
-	if d20 <= 0 then
+	if d20 <= 10 then
+	 d20_target = #path
+	elseif d20 <= 0 then
 		set_mode(2)
 	end
 end
 
-function draw_d20()
-	dx = 245
-	if d20 < 10 then
-		dx = 247
+function update_d20()
+ if d20_target == d20_node then
+  return
+ end
+ -- move d20 toward target
+ node = path[d20_node]
+	xdif = node[1]*8 - d20_x
+	ydif = node[2]*8 - d20_y
+	d20_x += mid(-1, xdif, 1)
+	d20_y += mid(-1, ydif, 1)
+	if d20_x == node[1]*8
+	and d20_y == node[2]*8 then
+		d20_node += 1
+		---[[
 	end
-	print (d20,dx,87,0)
 end
 
-
+function draw_d20()
+	dxt = 2
+	dyt = 3
+	if d20 < 10 then
+		doff = 2
+	end
+	spr (22,d20_x,d20_y,2,2)
+	print (d20,d20_x+dyt,d20_y+dyt,0)
+end
+-->8
 
 
 	--[[

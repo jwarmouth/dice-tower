@@ -140,7 +140,7 @@ function _draw()
 end
 -->8
 function init_menu()
-	menux = 256
+	menux = 272
 end
 
 function set_mode(m)
@@ -169,6 +169,9 @@ function update_menu()
 	end
 	
 	if btnp(❎) then
+	 if mode == 2 then
+	 	restart()
+	 end
 	 set_mode(1)
 	end
 end
@@ -236,7 +239,11 @@ function damage_d20()
 end
 
 function draw_d20()
-	print (d20,244,88,0)
+	dx = 245
+	if d20 < 10 then
+		dx = 247
+	end
+	print (d20,dx,87,0)
 end
 
 

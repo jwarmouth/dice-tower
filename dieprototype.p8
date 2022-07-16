@@ -4,21 +4,34 @@ __lua__
 --#include path.p8:1
 
 function _init()
-	e = {}
 	--add(e,{29*8+4,14*8,-1,0})
+	restart()
 	add_enemy()
 	set_path()
-	cx = 64
-	cy = 64
+	init_menu()
+	set_mode(0)
 	cspeed = 3
+end
+
+function restart()
+	e = {}
 	t = {}
+	d20 = 20
 	difficulty = 1
 	preview = {}
 	previewing = false
 	prevtime = 0
+	cx = 64
+	cy = 64
 end
 
 function _update()
+	
+	if mode != 1 then
+		update_menu()
+		return
+	end
+	
 	if btn(⬆️) then
 		cy = max(cy-cspeed,0)
 	end
@@ -59,10 +72,14 @@ function _update()
 	if prevtime <= 0
 	and previewing == false then
 		previewing = true
-		preview.speed = 5+rnd(60)
+		if #t > 3 then
+			preview.speed = 5+rnd(60)
+		else
+			preview.speed = 15+rnd(50)
+		end
 		preview.range = 8+rnd(32)
 		preview.durab = rnd(6)
-		if rnd(7) < 1 then
+		if rnd(7) < 1 and #t > 3 then
 			preview.targets = rnd(10)
 		else
 			preview.targets = rnd(3)
@@ -133,7 +150,13 @@ end
 
 function _draw()
 	cls()
-	camera(min(max(cx-64,0),128),0)
+	
+	if mode != 1 then
+		draw_menu()
+		return
+	end
+	
+	camera(mid(0,cx-64,128),0)
 	map()
 	--draw enemies
 	for i = 1, #e do
@@ -164,7 +187,11 @@ function _draw()
 			  +(cy-t[i].y)^2
 			 < (t[i].range
 			 	+preview.range)^2 then
+			 rectfill(mid(0,cx-64,128),121
+			 ,mid(0,cx-64,128)+84,128,6)
 			 color(8)
+			 print("towers cannot overlap"
+			 ,mid(0,cx-63,128),122)
    end
 		end
 		circ(cx,cy,preview.range)
@@ -174,7 +201,18 @@ function _draw()
 		print("targets: "
 		..ceil(preview.targets)
 		,cx-20,cy+20)
+		print("press x to place tower"
+		,mid(0,cx-63,128),122-12)
 	end
+	for i = 1, #t do
+		if (cx-t[i].x)^2
+			+(cy-t[i].y)^2
+			< t[i].range^2 then
+			print("press z to remove tower"
+		 ,mid(0,cx-63,128),122-6)
+		end
+	end
+	draw_d20()
 	print(flr(difficulty),min(max(cx-64,0),128)+1,1)
 end
 __gfx__

@@ -24,6 +24,8 @@ function restart()
 	cx = 64
 	cy = 64
 	reset_d20()
+	towers = 0
+	enemies = 0
 end
 
 function _update()
@@ -113,6 +115,7 @@ function _update()
 			t[#t].range = preview.range
 			t[#t].targets=preview.targets
 			t[#t].durab = 5+rnd(2)
+			towers += 1
 		end
 	end
 	
@@ -136,6 +139,7 @@ function _update()
 				  +((e[j][2]-t[i].y)/2)^2
 				<=(t[i].range/2)^2 then
 					del(e,e[j])
+					enemies += 1
 					--difficulty += .5
 					tars -= 1
 					if tars < 1 then

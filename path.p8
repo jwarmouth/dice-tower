@@ -166,7 +166,7 @@ end
 -- menu
 
 function init_menu()
-	menux = 272
+	--menux = 272
 end
 
 function set_mode(m)
@@ -174,10 +174,6 @@ function set_mode(m)
 	-- 0 = title
 	-- 1 = active
 	-- 2 = game over
-	
-	if mode !=0 then
-		--menux = 256
-	end
 end
 
 function update_menu()
@@ -203,21 +199,26 @@ function update_menu()
 end
 
 function draw_menu()
-	if mode == 2 then
-		menux = 400
-	else
-		menux = 272
-	end
 	camera(menux,0)
 	map()
-	spr(0,cx+menux,cy)
+	
 	if mode == 0 then
-		print ("arrows to move",36+menux,96,7) 
-		print ("❎ to start",42+menux,103,7) 
+		-- main menu
+		menux = 272
+		print ("arrows to move",
+		 36+menux,96,7) 
+		print ("❎ to start",
+		 42+menux,103,7) 
 	else
-		print ("you were diced",36+menux,81,8)
-		print ("❎ to restart",38+menux,99,7) 
+	 -- game over
+		menux = 400
+		print ("you were diced",
+		 36+menux,81,8)
+		print ("❎ to restart",
+		 38+menux,99,7) 
 	end
+	
+	spr(0,cx+menux,cy)
 end
 -->8
 -- path
@@ -227,7 +228,9 @@ function set_path()
 		{0,1},		  {13,1},  {13,3}, 
 		{0,3},    {0,6},   {3,6},
 		{3,9},    {6,9},		 {6,12},
-		{10,12},	 {10,9},  {17,9},
+		{10,12},	 {10,9},  
+		-- {15,9}, -- d20 starting point
+		{17,9},
 		{17,11},  {21,11}, {21,9},
 		{23,9},   {23,4},  {20,4},
 		{20,1},   {26,1},  {26,11},
@@ -243,12 +246,14 @@ function reset_d20()
 	d20_target = 12
 	d20_x = 240
 	d20_y = 80
+	d20_pal = 6
 	--d20_x = path[d20_node][1]
 	--d20_y = path[d20_node][2] 
 end
 
 function damage_d20()
 	d20 -= 1
+	d20_pal = 8
 	if d20 <= 10 then
 	 d20_target = #path
 	end
@@ -281,7 +286,10 @@ function draw_d20()
 	if d20 < 10 then
 		dxt += 2
 	end
+	pal(6,d20_pal)
 	spr (22,d20_x,d20_y,2,2)
+	pal()
+	d20_pal = 6
 	print (d20,d20_x+dxt,d20_y+dyt,0)
 end
 -->8

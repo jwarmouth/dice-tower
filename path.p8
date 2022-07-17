@@ -167,6 +167,7 @@ end
 
 function init_menu()
 	--menux = 272
+	set_mode(0)
 end
 
 function set_mode(m)
@@ -214,8 +215,19 @@ function draw_menu()
 		menux = 400
 		print ("you were diced",
 		 36+menux,81,8)
+		 
+		print ("you got to level "
+		 .. difficulty,
+		 28+menux, 99, 6)
+		print ("you defeated " .. 
+			enemies .. " enemies",
+		 20+menux, 105, 6)
+		print ("you placed " .. 
+			towers .. " towers",
+		 26+menux, 111, 6)
+
 		print ("❎ to restart",
-		 38+menux,99,7) 
+		 38+menux,121,7) 
 	end
 	
 	spr(0,cx+menux,cy)

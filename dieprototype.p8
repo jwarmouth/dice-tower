@@ -96,10 +96,10 @@ function _update()
 	if btnp(❎) and previewing then
 		local test = true
 		for i = 1, #t do
-			if (cx-t[i].x)^2
-			  +(cy-t[i].y)^2
-			 < (t[i].range
-			 	+preview.range)^2 then
+			if ((cx-t[i].x)/2)^2
+			  +((cy-t[i].y)/2)^2
+			 < ((t[i].range
+			 	+preview.range)/2)^2 then
 			 test = false
    end
 		end
@@ -118,9 +118,9 @@ function _update()
 	
 	if btnp(🅾️) then
 		for i = #t, 1, -1 do
-			if (cx-t[i].x)^2
-			  +(cy-t[i].y)^2
-			 < t[i].range^2 then
+			if ((cx-t[i].x)/2)^2
+			  +((cy-t[i].y)/2)^2
+			 < (t[i].range/2)^2 then
 			 del(t,t[i])
    end
 		end
@@ -132,9 +132,9 @@ function _update()
 		if t[i].timer < 1 then
 			local tars = t[#t].targets
 			for j = #e, 1, -1 do
-				if (e[j][1]-t[i].x)^2
-				  +(e[j][2]-t[i].y)^2
-				<=t[i].range^2 then
+				if ((e[j][1]-t[i].x)/2)^2
+				  +((e[j][2]-t[i].y)/2)^2
+				<=(t[i].range/2)^2 then
 					del(e,e[j])
 					--difficulty += .5
 					tars -= 1
@@ -179,6 +179,14 @@ function _draw()
 		end
 		print(ceil(t[i].targets)
 		,t[i].x,t[i].y+10)
+		--[[
+		print(t[i].x
+		,t[i].x+10,t[i].y)
+		print(t[i].y
+		,t[i].x+10,t[i].y+10)
+		print(i
+		,t[i].x+10,t[i].y-10)
+		--]]
 	end
 	
 	--draw cursor & preview
@@ -186,15 +194,18 @@ function _draw()
 	if previewing then
 		color(6)
 		for i = 1, #t do
-			if (cx-t[i].x)^2
-			  +(cy-t[i].y)^2
-			 < (t[i].range
-			 	+preview.range)^2 then
+			if ((cx-t[i].x)/2)^2
+			  +((cy-t[i].y)/2)^2
+			 < ((t[i].range
+			 	+preview.range)/2)^2 then
 			 rectfill(mid(0,cx-64,128),121
 			 ,mid(0,cx-64,128)+84,128,6)
 			 color(8)
 			 print("towers cannot overlap"
 			 ,mid(0,cx-63,128),122)
+			 --print(i,min(max(cx-64,0),128)+1,11)
+   	--print(t[i].x,min(max(cx-64,0),128)+1,21)
+   	--print(t[i].y,min(max(cx-64,0),128)+1,31)
    end
 		end
 		circ(cx,cy,preview.range)
@@ -208,15 +219,28 @@ function _draw()
 		,mid(0,cx-63,128),122-12)
 	end
 	for i = 1, #t do
-		if (cx-t[i].x)^2
-			+(cy-t[i].y)^2
-			< t[i].range^2 then
+		if ((cx-t[i].x)/2)^2
+			+ ((cy-t[i].y)/2)^2
+			< (t[i].range/2)^2 then
 			print("press z to remove tower"
 		 ,mid(0,cx-63,128),122-6)
 		end
 	end
 	draw_d20()
 	print(flr(difficulty),min(max(cx-64,0),128)+1,1)
+	--[[
+	for x = 0, 256, 2 do
+		for y = 0, 128, 2 do
+			for i = 1, #t do
+				if ((x-t[i].x)/2)^2
+			  +((y-t[i].y)/2)^2
+			 < (t[i].range/2)^2 then
+			 	pset(x,y,8)
+   	end
+   end
+		end
+	end
+	--]]
 end
 __gfx__
 0000000033333333999999997777777777777777777777777ff77ff7000000000000000000000000000000000000000000000000000000000000000000000000

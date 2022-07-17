@@ -132,8 +132,8 @@ function _update()
 		if t[i].timer < 1 then
 			local tars = t[#t].targets
 			for j = #e, 1, -1 do
-				if abs(e[j][1]-t[i].x)^2
-				  +abs(e[j][2]-t[i].y)^2
+				if (e[j][1]-t[i].x)^2
+				  +(e[j][2]-t[i].y)^2
 				<=t[i].range^2 then
 					del(e,e[j])
 					--difficulty += .5

@@ -8,7 +8,7 @@ function _init()
 	add_enemy()
 	set_path()
 	init_menu()
-	set_mode(0)
+	--set_mode(0)
 	cspeed = 3
 	restart()
 end

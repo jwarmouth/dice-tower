@@ -1,6 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 27
 __lua__
+--[[
 function _init()
 	e = {}
 	--add(e,{29*8+4,14*8,-1,0})
@@ -138,7 +139,32 @@ function _draw()
 	
 	draw_d20()
 end
+--]]
+
+
+
+	--[[
+	for i = 1, #e do
+		if e[i][4] > 0 then
+			e[i][1] -= 1
+			e[i][4] -= 1
+			if e[i][4] == 0 then
+				e[i][3] *= -1
+			end
+		else
+			e[i][2] += e[i][3]
+			if e[i][2] == 12
+			or(e[i][2] == 108
+			and e[i][1] < 28*8) then
+				e[i][4] = 4*8
+			end
+		end
+	end
+	--]]
+
 -->8
+-- menu
+
 function init_menu()
 	menux = 272
 end
@@ -193,6 +219,8 @@ function draw_menu()
 		print ("❎ to restart",38+menux,99,7) 
 	end
 end
+-->8
+-- path
 
 function set_path()
 	path = {
@@ -206,35 +234,8 @@ function set_path()
 		{30,11}
 	}
 end
-
-function add_enemy()
-	if mode != 1 then return end
-	add(e,{0,8,2})
-end
-
--- loop through enemies to path
-function move_enemies()
-	if mode !=1 then return end
-	--for i = 1, #e do
-	for enemy in all(e) do
-		node = path[enemy[3]]
-		xdif = node[1]*8 - enemy[1]
-		ydif = node[2]*8 - enemy[2]
-		enemy[1] += mid(-1, xdif, 1)
-		enemy[2] += mid(-1, ydif, 1)
-		if enemy[1] == node[1]*8
-		and enemy[2] == node[2]*8 then
-			enemy[3] += 1
-			---[[
-			if enemy[3] > #path then
-				-- enemy reached end
-				del(e, enemy)
-				damage_d20()
-			end
-			--]]
-		end
-	end
-end
+-->8
+-- d20
 
 function reset_d20()
 	d20 = 20
@@ -284,27 +285,36 @@ function draw_d20()
 	print (d20,d20_x+dxt,d20_y+dyt,0)
 end
 -->8
+-- enemy movement
 
+function add_enemy()
+	if mode != 1 then return end
+	add(e,{0,8,2})
+end
 
-	--[[
-	for i = 1, #e do
-		if e[i][4] > 0 then
-			e[i][1] -= 1
-			e[i][4] -= 1
-			if e[i][4] == 0 then
-				e[i][3] *= -1
+-- loop through enemies to path
+function move_enemies()
+	if mode !=1 then return end
+	--for i = 1, #e do
+	for enemy in all(e) do
+		node = path[enemy[3]]
+		xdif = node[1]*8 - enemy[1]
+		ydif = node[2]*8 - enemy[2]
+		enemy[1] += mid(-1, xdif, 1)
+		enemy[2] += mid(-1, ydif, 1)
+		if enemy[1] == node[1]*8
+		and enemy[2] == node[2]*8 then
+			enemy[3] += 1
+			---[[
+			if enemy[3] > #path then
+				-- enemy reached end
+				del(e, enemy)
+				damage_d20()
 			end
-		else
-			e[i][2] += e[i][3]
-			if e[i][2] == 12
-			or(e[i][2] == 108
-			and e[i][1] < 28*8) then
-				e[i][4] = 4*8
-			end
+			--]]
 		end
 	end
-	--]]
-
+end
 __gfx__
 00000000333333339999999900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000333333339999999900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

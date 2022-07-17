@@ -177,6 +177,11 @@ function update_menu()
 end
 
 function draw_menu()
+	if mode == 2 then
+		menux = 400
+	else
+		menux = 272
+	end
 	camera(menux,0)
 	map()
 	spr(0,cx+menux,cy)
@@ -184,8 +189,8 @@ function draw_menu()
 		print ("arrows to move",36+menux,96,7) 
 		print ("❎ to start",42+menux,103,7) 
 	else
-		print ("you were diced",36+menux,86,8)
-		print ("❎ to restart",38+menux,93,7) 
+		print ("you were diced",36+menux,81,8)
+		print ("❎ to restart",38+menux,99,7) 
 	end
 end
 
@@ -270,13 +275,13 @@ function update_d20()
 end
 
 function draw_d20()
-	dxt = 4
-	dyt = 5
+	dxt = 5
+	dyt = 7
 	if d20 < 10 then
-		dyt += 2
+		dxt += 2
 	end
 	spr (22,d20_x,d20_y,2,2)
-	print (d20,d20_x+dyt,d20_y+dyt,0)
+	print (d20,d20_x+dxt,d20_y+dyt,0)
 end
 -->8
 
